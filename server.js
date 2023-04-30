@@ -3,6 +3,15 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const connectDB = require('./config/database');
 
+// Handle Uncaught exception
+process.on('uncaughtException', (err, promise) => {
+  console.log(`Error : ${err.message}`.red);
+  // Close server
+  server.close(() => {
+    process.exit(1);
+  });
+});
+
 // Config Dotenv
 dotenv.config({ path: './config/.env' });
 
